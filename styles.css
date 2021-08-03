@@ -1,13 +1,15 @@
 body {
     margin: 0;
-    background: rgb(42,0,111);
-    background: radial-gradient(circle, rgba(42,0,111,1) 0%, rgba(33,0,111,1) 35%, rgba(17,0,59,1) 100%);
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(22,0,74,1) 15%, rgba(33,0,111,1) 50%, rgba(22,0,74,1) 85%, rgba(0,0,0,1) 100%);
+    background-repeat: no-repeat;
+    height: 100%;
     color: white;
 }
 
 html {
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Kaushan Script', cursive;
 }
 
 *, *::before, *::after {
@@ -16,10 +18,10 @@ html {
 }
 
 header {
-    height: 200px;
-    background: rgb(194,111,21);
-    background: linear-gradient(0deg, rgba(194,111,21,1) 8%, rgba(180,14,196,1) 76%);
-    margin-bottom: 100px; 
+    height: 150px;
+    background: rgb(225,0,245);
+    background: linear-gradient(0deg, rgba(225,0,245,1) 0%, rgba(255,145,26,1) 100%); 
+    margin-bottom: 75px; 
 }
 
 .title {
@@ -27,8 +29,8 @@ header {
     text-align: center;
     color: #28cfec;
     text-shadow: 2px 2px black;
-    font-size: 90px;
-    padding-top: 40px;
+    font-size: 80px;
+    padding-top: 20px;
 }
 
 .container {
@@ -68,8 +70,19 @@ header {
     align-items: center;
     width: 200px;
     height: 200px;
-    color: white;
-    background-color: black;
+    /* color: white; */
+    background-color: rgba(0, 0, 0, 0);
     font-size: 128px;
-    border: 1px solid white;
+    border: 3px solid white;
+}
+
+.restart {
+    display: block;
+    height: 50px;
+    width: 400px;
+    margin: 50px auto auto auto;
+    background: rgb(225,0,245);
+    background: linear-gradient(90deg, rgba(225,0,245,1) 0%, rgba(255,145,26,1) 100%); 
+    font-family: inherit;
+    font-size: 24px;
 }
