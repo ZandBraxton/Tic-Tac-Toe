@@ -28,6 +28,7 @@ html {
     width: 200px;
     height: 200px;
     color: white;
+    background-color: black;
     font-size: 128px;
     border: 1px solid white;
 }
