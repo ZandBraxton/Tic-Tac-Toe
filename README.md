@@ -40,6 +40,9 @@ function checkForWin(whichPlayer){
         whichPlayer, then we can return a win!
   - If we loop through all the winConditions and fall out the bottom, no win.
 
-  Add restart button
+  Add restart button (did)
   On the left there should be a form to change the name of P1 and a button on the right for P2
-  Add a score system
+  Add a display that happens when the game is won/tied, which prevents users from placing down any more markers.
+  Only allow the restart button to restart when faced with this display
+
+
