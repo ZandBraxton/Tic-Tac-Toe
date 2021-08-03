@@ -3,40 +3,30 @@ const playerFactory = (name, marker) => {
     return {name, marker, moves}
 }
 
-
-
-const gameBoard = (() => {
-    const markers = [
-        1, 2, 3,
-        4, 5, 6,
-        7, 8, 9
-    ]
+const displayController = (() => {
+    // console.log(gameBoard.markers)
+    // console.log(gameBoard.markers.length)
+    // const board = document.querySelector('.gameboard')
     
-    // console.log(markers)
-    const domBoard = document.querySelectorAll('.gametile')
-    //create players
-    const Player1 = playerFactory("P1", "X")
-    const Player2 = playerFactory("P2", "O")
-    let player = {}
-    randomPlayerStart()
-    bind()
+    //make display function and then return it to gameboard to use with marker array
 
-    function randomPlayerStart() {
-        let x = (Math.floor(Math.random() * 2) == 0)
-        if(x) {
-            player = Player1
-        } else {
-            player = Player2
-        }
-    }
 
-    function bind () {
+    // for (let i = 0; i < 9; i++) {
+    //     const tiles = document.createElement('div')
+    //     tiles.classList.add('gametile')
+    //     tiles.id = i + 1
+    //     tiles.textContent = gameBoard.markers[i]
+    //     board.appendChild(tiles)
+    // }
+
+
+    function bind(domBoard) {
         domBoard.forEach(tile => {
             tile.addEventListener('click', function() {
                 let tile = this
                 console.log(tile.id)
-                console.log(markers)
-                placeMarker(tile)
+                console.log(gameBoard.markers)
+                gameBoard.placeMarker(tile)
             })
         })    
     }    
@@ -50,8 +40,45 @@ const gameBoard = (() => {
                 placeMarker(tile)
             })
         })    
-    }    
-        
+    } 
+
+    function clearBoard()
+
+    function winScreen(player, result) {
+        if (result === "Win") {
+            console.log(`${player.name} is the winner!`)
+        } else {
+            console.log("Tie game!")
+        }
+    }
+
+    return {winScreen, bind, unbind}
+})();
+
+
+
+const gameBoard = (() => {
+    const markers = [
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9
+    ]
+    const domBoard = document.querySelectorAll('.gametile')
+    const Player1 = playerFactory("P1", "X")
+    const Player2 = playerFactory("P2", "O")
+    let player = {}
+    let counter = 0
+    randomPlayerStart()
+    displayController.bind(domBoard)
+
+    function randomPlayerStart() {
+        let x = (Math.floor(Math.random() * 2) == 0)
+        if(x) {
+            player = Player1
+        } else {
+            player = Player2
+        }
+    }
 
     function switchPlayer() {
         if(player.marker === "X") {
@@ -70,6 +97,8 @@ const gameBoard = (() => {
             player.moves.push(tile.id)
             checkWinCondition()
             switchPlayer()
+            counter++
+            console.log(counter)
         }
     }
 
@@ -95,35 +124,15 @@ const gameBoard = (() => {
                     if (player.moves.includes(n)) {
                         j++
                         n = winCondition[i][j]
-                        if (player.moves.includes(n)) {
-                            console.log("You Win!") 
-                            displayController.winScreen()
+                        if (player.moves.includes(n)) { 
+                            displayController.winScreen(player, "Win")
                     } 
                 } 
             } 
-        } 
+        } if (counter === 8) {
+            displayController.winScreen(player, "Tie")
+        }
     }   
-        return {markers}
+        return {placeMarker, markers}
 })();
 
-const displayController = (() => {
-    // console.log(gameBoard.markers)
-    // console.log(gameBoard.markers.length)
-    // const board = document.querySelector('.gameboard')
-    
-    //make display function and then return it to gameboard to use with marker array
-
-
-    // for (let i = 0; i < 9; i++) {
-    //     const tiles = document.createElement('div')
-    //     tiles.classList.add('gametile')
-    //     tiles.id = i + 1
-    //     tiles.textContent = gameBoard.markers[i]
-    //     board.appendChild(tiles)
-    // }
-    function winScreen () {
-        console.log("test")
-    }
-
-    return {winScreen}
-})();
