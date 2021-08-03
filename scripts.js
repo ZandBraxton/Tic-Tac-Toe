@@ -42,7 +42,9 @@ const displayController = (() => {
         })    
     } 
 
-    function clearBoard()
+    function clearBoard() {
+        
+    }
 
     function winScreen(player, result) {
         if (result === "Win") {
