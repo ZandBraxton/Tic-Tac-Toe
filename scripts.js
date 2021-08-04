@@ -37,13 +37,15 @@ const displayController = (() => {
         player2.textContent = Player2.name
     }
 
-    function changeName(e) {
+    function changeName(e, Player1, Player2) {
         console.log(e.target.id)
         if (e.target.id === '1') {
-            console.log('p1')
+            Player1.name = prompt("Player name?")
+            renderName(Player1, Player2)
         }
         else {
-            console.log('p2')
+            Player2.name = prompt("Player name?")
+            renderName(Player1, Player2)
         }
     }
 
@@ -63,13 +65,17 @@ const gameBoard = (() => {
     restart.addEventListener('click', () => {
         displayController.clearBoard(domBoard)
     })
+
+    gameStart()
+
+
     const nameChange = document.querySelectorAll('.name-change')
        nameChange.forEach(btn => {
            btn.addEventListener('click', (e) => {
-               displayController.changeName(e)
+               displayController.changeName(e, Player1, Player2)
            })
        })
-    gameStart()
+    
     
 
 
