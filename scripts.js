@@ -5,7 +5,6 @@ const playerFactory = (name, marker) => {
 
 const displayController = (() => {
 
-
     function bind(domBoard) {
         domBoard.forEach(tile => {
             tile.addEventListener('click', () => {
@@ -31,7 +30,24 @@ const displayController = (() => {
         }
     }
 
-    return {winScreen, bind, clearBoard}
+    function renderName(Player1, Player2) {
+        const player1 = document.querySelector('.player1')
+        const player2 = document.querySelector('.player2')
+        player1.textContent = Player1.name
+        player2.textContent = Player2.name
+    }
+
+    function changeName(e) {
+        console.log(e.target.id)
+        if (e.target.id === '1') {
+            console.log('p1')
+        }
+        else {
+            console.log('p2')
+        }
+    }
+
+    return {winScreen, bind, clearBoard, renderName, changeName}
 })();
 
 
@@ -47,15 +63,22 @@ const gameBoard = (() => {
     restart.addEventListener('click', () => {
         displayController.clearBoard(domBoard)
     })
+    const nameChange = document.querySelectorAll('.name-change')
+       nameChange.forEach(btn => {
+           btn.addEventListener('click', (e) => {
+               displayController.changeName(e)
+           })
+       })
     gameStart()
-
+    
 
 
     function gameStart () {
-        Player1 = playerFactory("P1", "X")
-        Player2 = playerFactory("P2", "O")
+        Player1 = playerFactory("Player 1", "X")
+        Player2 = playerFactory("Player 2", "O")
         player = {}
         counter = 0
+        displayController.renderName(Player1, Player2)
         randomPlayerStart()
     }
    
