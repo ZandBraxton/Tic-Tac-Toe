@@ -50,7 +50,12 @@ const displayController = (() => {
         }
     }
 
-    return {winScreen, bind, clearBoard, renderName, changeName}
+    return {
+        winScreen, 
+        bind, 
+        clearBoard, 
+        renderName, 
+        changeName}
 })();
 
 
@@ -58,29 +63,33 @@ const displayController = (() => {
 const gameBoard = (() => {
     const domBoard = document.querySelectorAll('.gametile')
     displayController.bind(domBoard)
+
+    //init players and rules
     let Player1 = playerFactory("Player 1", "X")
     let Player2 = playerFactory("Player 2", "O")
     let player = {}
     let counter = 0
     let gameover = false
+
+    //init restart button
     const restart = document.querySelector('.restart')
     restart.addEventListener('click', () => {
         displayController.clearBoard(domBoard)
     })
 
+    //start game
     gameStart()
 
 
     const nameChange = document.querySelectorAll('.name-change')
        nameChange.forEach(btn => {
            btn.addEventListener('click', (e) => {
-               displayController.changeName(e, Player1, Player2, player)
+               if (gameover != true) {
+                   displayController.changeName(e, Player1, Player2, player)
+               }
            })
        })
     
-    
-
-
     function gameStart () {
         Player1.moves = []
         Player2.moves = []
@@ -123,7 +132,6 @@ const gameBoard = (() => {
             if (gameover != true) {
                 switchPlayer()
             }
-            console.log(counter)
         }
     }
 
@@ -138,11 +146,9 @@ const gameBoard = (() => {
             ['2', '5', '8'],
             ['3', '6', '9']
     ]
-        
         for (let i = 0; i < winCondition.length; i++) {
             let j = 0   
             n = winCondition[i][j]
-            console.log(player.moves)
             if (player.moves.includes(n)) {
                     j++
                     n = winCondition[i][j]
@@ -156,7 +162,8 @@ const gameBoard = (() => {
                     } 
                 } 
             } 
-        } if (counter === 9) {
+        } 
+        if (counter === 9) {
             displayController.winScreen(player, "Tie")
             gameover = true
             return

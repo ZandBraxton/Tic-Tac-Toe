@@ -14,7 +14,6 @@ html {
 
 *, *::before, *::after {
     box-sizing: inherit;
-    /* outline: 1px solid red !important; */
 }
 
 header {
@@ -36,6 +35,8 @@ header {
 .turn {
     text-align: center;
     margin-bottom: 30px;
+    color: #28cfec;
+    text-shadow: 2px 2px black;
 }
 
 .container {
@@ -51,18 +52,25 @@ header {
     align-items: center; 
     justify-content: center;
     margin: auto;
+    
 }
 
 .name h1 {
-    /* display: inline-block; */
-    margin: 20px 0 0 0;
-    font-size: 72px;
     width: 300px;
     text-align: center;
+    color: #28cfec;
+    text-shadow: 2px 2px black;
+}
+
+.player1, .player2 {
+    font-size: 72px;
+    margin: 20px 0 5px 0;
 }
 
 .marker {
     font-family: 'Open Sans', sans-serif;
+    font-size: 94px;
+    margin: 0;
 }
 
 .name-change {
@@ -73,6 +81,11 @@ header {
     background: linear-gradient(90deg, rgba(225,0,245,1) 0%, rgba(255,145,26,1) 100%); 
     font-family: inherit;
     font-size: 20px;
+}
+
+.name-change:hover {
+    color: white;
+    transition: all 0.1s;
 }
 
 
@@ -92,12 +105,20 @@ header {
     align-items: center;
     width: 200px;
     height: 200px;
-    color: white;
+    color: #28cfec;
+    text-shadow: 2px 2px black;
     background-color: rgba(0, 0, 0, 0);
     font-family: 'Open Sans', sans-serif;
-    font-size: 128px;
+    font-size: 160px;
     border: 3px solid white;
 }
+
+.gametile:hover {
+    background: #450eff;
+    transition: all 0.1s;
+    cursor: pointer;
+}
+
 
 .restart {
     display: block;
@@ -108,4 +129,9 @@ header {
     background: linear-gradient(90deg, rgba(225,0,245,1) 0%, rgba(255,145,26,1) 100%); 
     font-family: inherit;
     font-size: 30px;
+}
+
+.restart:hover {
+    color: white;
+    transition: all 0.1s;
 }
