@@ -30,23 +30,27 @@ const displayController = (() => {
         }
     }
 
-    function renderName(Player1, Player2) {
-        const player1 = document.querySelector('.player1')
-        const player2 = document.querySelector('.player2')
+    const player1 = document.querySelector('.player1')
+    const player2 = document.querySelector('.player2')
+    const currentPlayer = document.querySelector('.turn')
+
+    function renderName(Player1, Player2, player) {
+        currentPlayer.textContent = `${player.name}'s turn!`
         player1.textContent = Player1.name
         player2.textContent = Player2.name
     }
 
-    function changeName(e, Player1, Player2) {
-        console.log(e.target.id)
-        if (e.target.id === '1') {
-            Player1.name = prompt("Player name?")
-            renderName(Player1, Player2)
+    function changeName(e, Player1, Player2, player) {
+        let name = prompt("Player name?")
+        if (name != null && name != '') {
+            if (e.target.id === '1') {
+            Player1.name = name
+            }
+            else {
+                Player2.name = name
+            }  
         }
-        else {
-            Player2.name = prompt("Player name?")
-            renderName(Player1, Player2)
-        }
+        renderName(Player1, Player2, player)
     }
 
     return {winScreen, bind, clearBoard, renderName, changeName}
@@ -72,7 +76,7 @@ const gameBoard = (() => {
     const nameChange = document.querySelectorAll('.name-change')
        nameChange.forEach(btn => {
            btn.addEventListener('click', (e) => {
-               displayController.changeName(e, Player1, Player2)
+               displayController.changeName(e, Player1, Player2, player)
            })
        })
     
@@ -84,8 +88,9 @@ const gameBoard = (() => {
         Player2 = playerFactory("Player 2", "O")
         player = {}
         counter = 0
-        displayController.renderName(Player1, Player2)
         randomPlayerStart()
+        displayController.renderName(Player1, Player2, player)
+        // displayController.renderTurnName(player)
     }
    
 
@@ -104,6 +109,7 @@ const gameBoard = (() => {
         } else {
             player = Player1
         }
+        displayController.renderName(Player1, Player2, player)
     }
 
     function placeMarker(tile) {
