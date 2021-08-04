@@ -4,7 +4,10 @@ const playerFactory = (name, marker) => {
 }
 
 const displayController = (() => {
-
+    const player1 = document.querySelector('.player1')
+    const player2 = document.querySelector('.player2')
+    const currentPlayer = document.querySelector('.turn')
+    
     function bind(domBoard) {
         domBoard.forEach(tile => {
             tile.addEventListener('click', () => {
@@ -19,20 +22,6 @@ const displayController = (() => {
             gameBoard.gameStart()
         })    
     }
-
-    function winScreen(player, result, domBoard) {
-        if (result === "Win") {
-            console.log(`${player.name} is the winner!`)
-            // clearBoard(domBoard)
-        } else {
-            console.log("Tie game!")
-            // clearBoard(domBoard)
-        }
-    }
-
-    const player1 = document.querySelector('.player1')
-    const player2 = document.querySelector('.player2')
-    const currentPlayer = document.querySelector('.turn')
 
     function renderName(Player1, Player2, player) {
         currentPlayer.textContent = `${player.name}'s turn!`
@@ -52,6 +41,14 @@ const displayController = (() => {
         }
         renderName(Player1, Player2, player)
     }
+    
+    function winScreen(player, result) {
+        if (result === "Win") {
+            currentPlayer.textContent = `${player.name} is the winner!`
+        } else {
+            currentPlayer.textContent = "Tie Game!" 
+        }
+    }
 
     return {winScreen, bind, clearBoard, renderName, changeName}
 })();
@@ -61,10 +58,11 @@ const displayController = (() => {
 const gameBoard = (() => {
     const domBoard = document.querySelectorAll('.gametile')
     displayController.bind(domBoard)
-    let Player1 = {}
-    let Player2 = {}
+    let Player1 = playerFactory("Player 1", "X")
+    let Player2 = playerFactory("Player 2", "O")
     let player = {}
     let counter = 0
+    let gameover = false
     const restart = document.querySelector('.restart')
     restart.addEventListener('click', () => {
         displayController.clearBoard(domBoard)
@@ -84,13 +82,12 @@ const gameBoard = (() => {
 
 
     function gameStart () {
-        Player1 = playerFactory("Player 1", "X")
-        Player2 = playerFactory("Player 2", "O")
-        player = {}
+        Player1.moves = []
+        Player2.moves = []
+        gameover = false
         counter = 0
         randomPlayerStart()
         displayController.renderName(Player1, Player2, player)
-        // displayController.renderTurnName(player)
     }
    
 
@@ -113,6 +110,9 @@ const gameBoard = (() => {
     }
 
     function placeMarker(tile) {
+        if (gameover === true) {
+            return
+        }
         if (tile.textContent != '') {
             return
         } else {
@@ -120,7 +120,9 @@ const gameBoard = (() => {
             tile.textContent = player.marker
             player.moves.push(tile.id)
             checkWinCondition()
-            switchPlayer()
+            if (gameover != true) {
+                switchPlayer()
+            }
             console.log(counter)
         }
     }
@@ -148,12 +150,16 @@ const gameBoard = (() => {
                         j++
                         n = winCondition[i][j]
                         if (player.moves.includes(n)) { 
-                            displayController.winScreen(player, "Win", domBoard)
+                            displayController.winScreen(player, "Win")
+                            gameover = true
+                            return
                     } 
                 } 
             } 
         } if (counter === 9) {
-            displayController.winScreen(player, "Tie", domBoard)
+            displayController.winScreen(player, "Tie")
+            gameover = true
+            return
         }
     }   
         return {placeMarker, gameStart}
